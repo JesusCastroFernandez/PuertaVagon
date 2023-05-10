@@ -1,0 +1,52 @@
+public class PuertaVagon extends ControlServicio implements Activable {
+    private boolean estado;
+    private String ubicacion;
+    
+    // Constructor con dos parámetros
+    public PuertaVagon(String ubicacion, String nombreServicio) {
+        this(ubicacion, nombreServicio, false);
+    }
+    
+    // Constructor con tres parámetros
+    public PuertaVagon(String ubicacion, String nombreServicio, boolean estado) {
+        super(nombreServicio);
+        this.estado = estado;
+        this.ubicacion = ubicacion;
+    }
+    
+    // Implementación de métodos getter para los atributos específicos
+    public boolean getEstado() {
+        return estado;
+    }
+    
+    public String getUbicacion() {
+        return ubicacion;
+    }
+    
+    // Redefinición del método toString
+    @Override
+    public String toString() {
+        String info = super.toString();
+        info += "\nPuerta Vagon Tren\n";
+        info += "\tPuerta: Estado " + (estado ? "cerrada" : "abierta") + "\n";
+        info += "\tUbicacion Puerta: " + ubicacion;
+        return info;
+    }
+    
+    // Implementación de los métodos de la interfaz Activable
+    @Override
+    public void on() throws ServicioException {
+        if (estado) {
+            throw new ServicioException("La puerta ya activada (cerrada)");
+        }
+        estado = true;
+    }
+    
+    @Override
+    public void off() throws ServicioException {
+        if (!estado) {
+            throw new ServicioException("La puerta ya desactivada (abierta)");
+        }
+        estado = false;
+    }
+}
